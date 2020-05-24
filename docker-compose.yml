@@ -53,14 +53,15 @@ services:
   krakend_ce:
     image: devopsfaith/krakend:1.1.1
     volumes:
-      - ./krakend:/etc/krakend
+      - ./api-gw:/etc/krakend
     ports:
-      - "1234:1234"
-      - "8080:8080"
-      - "8090:8090"
+      - "5001:5001"
+      - "5002:5002"
+      - "5003:5003"      
     depends_on:
       - fake_api
       - jaeger
+      - prometheus
   
   jwt_revoke:
     build:

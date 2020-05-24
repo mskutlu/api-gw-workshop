@@ -6,15 +6,15 @@ window.addEventListener('load', function() {
   loadingSpinner.style.display = 'none';
 
   var userProfile;
-  var apiUrl = document.location.protocol + '//' + document.location.hostname + ':8080';
+  var apiUrl = document.location.protocol + '//' + document.location.hostname + ':5001';
 
   var webAuth = new auth0.WebAuth({
     domain: AUTH0_DOMAIN,
     clientID: AUTH0_CLIENT_ID,
     redirectUri: AUTH0_CALLBACK_URL,
-    //audience: AUTH0_AUDIENCE,
+    audience: AUTH0_AUDIENCE,
     responseType: 'token id_token',
-    scope: 'openid profile read:messages',
+    scope: 'openid profile admin',
     leeway: 60
   });
 
