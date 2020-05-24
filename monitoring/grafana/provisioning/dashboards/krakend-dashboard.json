@@ -65,13 +65,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "opencensus_io_http_client_completed_count{http_client_method=\"GET\",http_client_status=\"200\"} ",
+          "expr": "rate(opencensus_io_http_client_completed_count{http_client_method=\"GET\",http_client_status=\"200\"}[1m])",
           "interval": "",
           "legendFormat": "{{http_client_method}}-{{http_client_status}}",
           "refId": "A"
         },
         {
-          "expr": "opencensus_io_http_client_completed_count{http_client_method=\"GET\",http_client_status=\"500\"} ",
+          "expr": "rate(opencensus_io_http_client_completed_count{http_client_method=\"GET\",http_client_status=\"500\"}[1m])",
           "interval": "",
           "legendFormat": "{{http_client_method}}-{{http_client_status}}",
           "refId": "B"
@@ -81,7 +81,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Count of completed requests, by HTTP method and response status",
+      "title": "Count of completed requests, by HTTP method and response status in last min",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -97,6 +97,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:145",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -105,6 +106,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:146",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -166,13 +168,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "opencensus_io_http_server_response_count_by_status_code{http_status=\"200\"}",
+          "expr": "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"200\"}[1m])",
           "interval": "",
           "legendFormat": "200",
           "refId": "A"
         },
         {
-          "expr": "opencensus_io_http_server_response_count_by_status_code{http_status=\"500\"}",
+          "expr": "rate(opencensus_io_http_server_response_count_by_status_code{http_status=\"500\"}[1m])",
           "interval": "",
           "legendFormat": "500",
           "refId": "B"
@@ -182,7 +184,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Server response count by status code",
+      "title": "Server response count by status code in last min",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -198,6 +200,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:73",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -206,6 +209,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:74",
           "format": "short",
           "label": null,
           "logBase": 1,

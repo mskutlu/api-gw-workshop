@@ -2,7 +2,7 @@
   "port": 5001,
   "version": 2,
   "timeout": "3000ms",
-  "cache_ttl": "300s",
+  "cache_ttl": "30s",
   "host": [
       "http://fake_api:8080"
   ],
@@ -12,8 +12,8 @@
       },
       "github_com/devopsfaith/krakend-gologging": {
           "level": "DEBUG",
-          "prefix": "[KRAKEND]",
-          "syslog": false,
+          "prefix": "[API-GW]",
+          "syslog": true,
           "stdout": true
       },
       "github_com/devopsfaith/krakend-opencensus": {
@@ -36,8 +36,7 @@
       "github_com/devopsfaith/krakend-cors": {
           "allow_origins": [
               "http://localhost:8080",
-              "http://localhost:3000",
-              "http://192.168.99.100:3000"
+              "http://localhost:3000"
           ],
           "allow_methods": [
               "POST",
@@ -245,19 +244,9 @@
       {
         "endpoint": "/notify",
         "method": "POST",
-        "extra_config": {
-            "github.com/devopsfaith/krakend-jose/validator": {
-                "alg": "RS256",
-                "audience": [
-                    "https://ahankendi.auth0.com/api/v2/"
-                ],
-                "roles_key": "https://ahankendi.auth0.com/api/v2/roles",
-                "roles": [],
-                "jwk-url": "https://ahankendi.auth0.com/.well-known/jwks.json"
-            }
-        },
+        "extra_config": {},
         "output_encoding": "json",
-        "concurrent_calls": 3,
+        "concurrent_calls": 1,
         "backend": [
           {
             "host": [
@@ -296,6 +285,9 @@
         },
         "output_encoding": "json",
         "concurrent_calls": 1,
+        "headers_to_pass": [
+            "TrackId"
+          ],
         "backend": [
           {
             "host": [
@@ -340,7 +332,7 @@
                 "exclusive":      false,
                 "no_wait":        true,
                 "no_local":       false,
-                "prefetch_count": 1
+                "prefetch_count": 10
               }
             }
           }

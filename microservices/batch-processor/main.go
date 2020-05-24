@@ -158,12 +158,18 @@ func handle(deliveries <-chan amqp.Delivery, consumer *Consumer) {
 		if len(d.Body) ==0{
 			d.Ack(true)
 		}
+
+		var trackId interface{}
+		if val, ok := d.Headers["TrackId"]; ok {
+			trackId=val
+		}
 		// Prepare this message to be persistent.  Your publishing requirements may
 		// be different.
 		msgStr := fmt.Sprintf(`{
+				"trackId": "%s",
 				"id": "%d",
 				"processTime": "%s"
-		}`,time.Now().UnixNano(),time.Now())
+		}`,trackId,time.Now().UnixNano(),time.Now())
 
 		msg := amqp.Publishing{
 			Headers:         amqp.Table{
