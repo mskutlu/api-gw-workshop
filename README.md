@@ -49,10 +49,13 @@ A Prometheus gathers the metrics from api gateway and stores them. Runs on [http
 ### Grafana
 Grafana is dashboarding UI, shows the metrics Runs on [http://localhost:3333](http://localhost:3333)
 
+### RabbitMQ
+
+Runs on [http://localhost:15672](http://localhost:15672)
+
 
 ### The JWT revoker
 A simple implementation of a JWT rovoker using the KrakenD remote bloomfilter client.
-
 
 Runs on [http://localhost:9000](http://localhost:9000)
 

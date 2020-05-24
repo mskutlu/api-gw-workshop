@@ -241,6 +241,66 @@
               }
           },
           "concurrent_calls": 1
+      },
+      {
+        "endpoint": "/products/{id}",
+        "method": "POST",
+        "extra_config": {},
+        "output_encoding": "json",
+        "concurrent_calls": 1,
+        "querystring_params": [
+          "id"
+        ],
+        "backend": [
+          {
+            "host": [
+                "amqp://guest:guest@rabbitmq:5672"
+            ],
+            "disable_host_sanitize": true,            
+            "method": "POST",
+            "extra_config": {
+              "github.com/devopsfaith/krakend-amqp/produce": {
+                "name": "products",
+                "exchange": "some-exchange",
+                "durable": true,
+                "delete": false,
+                "exclusive": false,
+                "no_wait": true,
+                "mandatory": true,
+                "immediate": false
+              }
+            }
+          }
+        ]
+      },
+      {
+        "endpoint": "/products",
+        "method": "GET",
+        "extra_config": {},
+        "output_encoding": "json",
+        "concurrent_calls": 1,
+        "backend": [
+          {
+            "host": [
+                "amqp://guest:guest@rabbitmq:5672"
+            ],
+            "disable_host_sanitize": true,            
+            "method": "GET",
+            "extra_config": {
+              "github.com/devopsfaith/krakend-amqp/consume": {
+                "name": "products",
+                "exchange": "some-exchange",
+                "durable":        true,
+                "delete":         false,
+                "exclusive":      false,
+                "no_wait":        true,
+                "no_local":       false,
+                "routing_key":    ["#"],
+                "prefetch_count": 10
+              }
+            }
+          }
+        ]
       }
   ],
   "output_encoding": "json"

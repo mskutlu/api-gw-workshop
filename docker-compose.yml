@@ -59,6 +59,7 @@ services:
       - "5002:5002"
       - "5003:5003"      
     depends_on:
+      - rabbitmq
       - fake_api
       - jaeger
       - prometheus
@@ -70,3 +71,10 @@ services:
       - "9000:9000"
     depends_on:
       - krakend_ce
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  
