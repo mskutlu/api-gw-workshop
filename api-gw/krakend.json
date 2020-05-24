@@ -243,14 +243,21 @@
           "concurrent_calls": 1
       },
       {
-        "endpoint": "/products/{id}",
+        "endpoint": "/notify",
         "method": "POST",
-        "extra_config": {},
+        "extra_config": {
+            "github.com/devopsfaith/krakend-jose/validator": {
+                "alg": "RS256",
+                "audience": [
+                    "https://ahankendi.auth0.com/api/v2/"
+                ],
+                "roles_key": "https://ahankendi.auth0.com/api/v2/roles",
+                "roles": [],
+                "jwk-url": "https://ahankendi.auth0.com/.well-known/jwks.json"
+            }
+        },
         "output_encoding": "json",
-        "concurrent_calls": 1,
-        "querystring_params": [
-          "id"
-        ],
+        "concurrent_calls": 3,
         "backend": [
           {
             "host": [
@@ -260,8 +267,8 @@
             "method": "POST",
             "extra_config": {
               "github.com/devopsfaith/krakend-amqp/produce": {
-                "name": "products",
-                "exchange": "some-exchange",
+                "name": "notifications",
+                "exchange": "notify-exchange",
                 "durable": true,
                 "delete": false,
                 "exclusive": false,
@@ -274,7 +281,45 @@
         ]
       },
       {
-        "endpoint": "/products",
+        "endpoint": "/processCommand",
+        "method": "POST",
+        "extra_config": {
+            "github.com/devopsfaith/krakend-jose/validator": {
+                "alg": "RS256",
+                "audience": [
+                    "https://ahankendi.auth0.com/api/v2/"
+                ],
+                "roles_key": "https://ahankendi.auth0.com/api/v2/roles",
+                "roles": [],
+                "jwk-url": "https://ahankendi.auth0.com/.well-known/jwks.json"
+            }
+        },
+        "output_encoding": "json",
+        "concurrent_calls": 1,
+        "backend": [
+          {
+            "host": [
+                "amqp://guest:guest@rabbitmq:5672"
+            ],
+            "disable_host_sanitize": true,            
+            "method": "POST",
+            "extra_config": {
+              "github.com/devopsfaith/krakend-amqp/produce": {
+                "name": "process",
+                "exchange": "process-exchange",
+                "durable": true,
+                "delete": false,
+                "exclusive": false,
+                "no_wait": true,
+                "mandatory": true,
+                "immediate": false
+              }
+            }
+          }
+        ]
+      },      
+      {
+        "endpoint": "/processResult",
         "method": "GET",
         "extra_config": {},
         "output_encoding": "json",
@@ -288,15 +333,14 @@
             "method": "GET",
             "extra_config": {
               "github.com/devopsfaith/krakend-amqp/consume": {
-                "name": "products",
-                "exchange": "some-exchange",
+                "name": "processed",
+                "exchange": "processed-exchange",
                 "durable":        true,
                 "delete":         false,
                 "exclusive":      false,
                 "no_wait":        true,
                 "no_local":       false,
-                "routing_key":    ["#"],
-                "prefetch_count": 10
+                "prefetch_count": 1
               }
             }
           }
