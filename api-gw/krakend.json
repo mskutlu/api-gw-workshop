@@ -78,17 +78,20 @@
                   "whitelist": [
                       "products"
                   ],
-                  "extra_config": {
-                      "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
-                          "maxRate": 1,
-                          "capacity": 1
-                      }
+                  "extra_config": {  
+                    "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
+                        "maxRate": 15,
+                        "capacity": 5
+                      }                    
                   }
               }
           ],
           "extra_config": {
               "github.com/devopsfaith/krakend-ratelimit/juju/router": {
-                  "maxRate": 2
+                "maxRate": 100,
+                "clientMaxRate": 10,
+                "key": "",
+                "strategy": "ip"                  
               }
           }
       },
@@ -102,7 +105,10 @@
                   ]
               },
               {
-                  "url_pattern": "/destinations/{resp0_destination_id}.json"
+                  "url_pattern": "/destinations/{resp0_destination_id}.json",
+                  "extra_config": {
+                    "github.com/devopsfaith/krakend-httpcache": {}
+                  }
               }
           ],
           "extra_config": {
@@ -164,7 +170,25 @@
                   "whitelist": [],
                   "mapping": {},
                   "group": "repo",
-                  "extra_config": {},
+                  "extra_config": {
+                    "github.com/devopsfaith/krakend/proxy": {
+                      "flatmap_filter": [
+                        {
+                          "type": "del",
+                          "args": [
+                            "owner.avatar_url"
+                          ]
+                        },
+                        {
+                          "type": "move",
+                          "args": [
+                            "owner.subscriptions_url",
+                            "s_url"
+                          ]
+                        }
+                      ]
+                    }
+                  },
                   "encoding": "json",
                   "method": "GET"
               }
