@@ -1,0 +1,316 @@
+{
+  "port": 8080,
+  "version": 2,
+  "timeout": "3000ms",
+  "cache_ttl": "30s",
+  "host": [
+    "http://localhost:8000"
+  ],
+  "endpoints": [
+    {
+      "endpoint": "/public",
+      "backend": [
+        {
+          "host": [
+            "https://api.github.com"
+          ],
+          "url_pattern": "/users/alperhankendi",
+          "whitelist": [
+            "avatar_url",
+            "name",
+            "company",
+            "blog",
+            "location",
+            "mail",
+            "hireable",
+            "followers",
+            "public_repos",
+            "public_gists"
+          ],
+          "mapping": {
+            "name": "FullName"
+          },
+          "group": "github",
+          "method": "GET"
+        },
+        {
+          "host": [
+            "https://api.github.com"
+          ],
+          "url_pattern": "/repos/alperhankendi/address-service",
+          "whitelist": [],
+          "mapping": {},
+          "group": "repo",
+          "extra_config": {
+            "github.com/devopsfaith/krakend/proxy": {
+              "flatmap_filter": [
+                {
+                  "type": "del",
+                  "args": [
+                    "owner.avatar_url"
+                  ]
+                },
+                {
+                  "type": "move",
+                  "args": [
+                    "owner.subscriptions_url",
+                    "s_url"
+                  ]
+                }
+              ]
+            }
+          },
+          "method": "GET"
+        }
+      ],
+      "extra_config": {}
+    },
+    {
+      "endpoint": "/foo",
+      "backend": [
+        {
+          "url_pattern": "/monolith/foo.json"
+        }
+      ],
+      "extra_config": {
+        "github.com/devopsfaith/krakend-jose/validator": {
+          "alg": "HS256",
+          "audience": [
+            "http://api.example.com"
+          ],
+          "roles_key": "roles",
+          "issuer": "https://krakend.io",
+          "roles": [
+            "role_a",
+            "role_c"
+          ],
+          "jwk-url": "http://localhost:8000/jwk/symmetric.json",
+          "disable_jwk_security": true
+        }
+      }
+    },
+    {
+      "endpoint": "/token",
+      "backend": [
+        {
+          "url_pattern": "/token.json"
+        }
+      ],
+      "extra_config": {
+        "github.com/devopsfaith/krakend-jose/signer": {
+          "alg": "HS256",
+          "kid": "sim2",
+          "keys-to-sign": [
+            "access_token",
+            "refresh_token"
+          ],
+          "jwk-url": "http://localhost:8000/jwk/symmetric.json",
+          "disable_jwk_security": true
+        }
+      }
+    },
+    {
+      "endpoint": "/checkout",
+      "method": "GET",
+      "extra_config": {
+        "github.com/devopsfaith/krakend-jose/validator": {
+          "alg": "HS256",
+          "audience": [
+            "http://api.example.com"
+          ],
+          "roles_key": "roles",
+          "issuer": "https://krakend.io",
+          "roles": [
+            "role_a",
+            "role_c"
+          ],
+          "jwk-url": "http://localhost:8000/jwk/symmetric.json",
+          "disable_jwk_security": true
+        }
+      },
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "url_pattern": "/shop/catalog.xml",
+          "encoding": "xml",
+          "sd": "static",
+          "extra_config": {
+            "github.com/devopsfaith/krakend/proxy": {
+              "flatmap_filter": [
+                {
+                  "type": "move",
+                  "args": [
+                    "catalog.id_product",
+                    "product_id"
+                  ]
+                },
+                {
+                  "type": "move",
+                  "args": [
+                    "catalog.name",
+                    "name"
+                  ]
+                },
+                {
+                  "type": "move",
+                  "args": [
+                    "catalog.date",
+                    "date"
+                  ]
+                },
+                {
+                  "type": "del",
+                  "args": [
+                    "catalog"
+                  ]
+                }
+              ]
+            }
+          },
+          "method": "GET",
+          "host": [
+            "http://localhost:8000"
+          ],
+          "disable_host_sanitize": false
+        },
+        {
+          "url_pattern": "/shop/promotion.json",
+          "encoding": "json",
+          "sd": "static",
+          "extra_config": {},
+          "method": "GET",
+          "host": [
+            "http://localhost:8000"
+          ],
+          "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/splash",
+      "method": "GET",
+      "extra_config": {},
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "url_pattern": "/shop/products.json",
+          "encoding": "json",
+          "sd": "static",
+          "method": "GET",
+          "host": [
+            "http://localhost:8000"
+          ],
+          "disable_host_sanitize": false,
+          "group": "products",
+          "extra_config": {
+              "github.com/devopsfaith/krakend/proxy":{
+                  "flatmap_filter":[
+                    {"type": "del","args": ["products.*.body_html" ] },
+                    {"type": "del","args": ["products.*.created_at" ] },
+                    {"type": "del","args": ["products.*.updated_at" ] },
+                    {"type": "del","args": ["products.*.template_suffix" ] },
+                    {"type": "del","args": ["products.*.handle" ] },
+                    {"type": "del","args": ["products.*.published_at" ] },
+                    {"type": "del","args": ["products.*.published_scope" ] },
+                    {"type": "move","args": ["products.*.id","products.*.productId" ] },
+                    {"type": "move","args": ["products.*.image.position","products.*.ImagePosition" ] },
+                    {"type": "move","args": ["products.*.image.src","products.*.ImageSource" ] },
+                    {"type": "del","args": ["products.*.image" ] }
+                  ]
+              }
+          }
+        },
+        {
+          "url_pattern": "/shop/campaigns.json",
+          "encoding": "json",
+          "sd": "static",
+          "extra_config": {
+            "github.com/devopsfaith/krakend/proxy": {
+              "flatmap_filter": [
+                {
+                  "type": "move",
+                  "args": [
+                    "campaigns.*.discounts.*.discount",
+                    "campaigns.*.discounts.*.discountPrice"
+                  ]
+                },
+                {
+                  "type": "del",
+                  "args": [
+                    "campaigns.*.discounts.*.id_product"
+                  ]
+                }
+              ]
+            }
+          },
+          "method": "GET",
+          "host": [
+            "http://localhost:8000"
+          ],
+          "disable_host_sanitize": false,
+          "group": "campaigns",
+          "blacklist": [
+            "id_campaign"
+          ],
+          "mapping": {
+            "name": "campaignDescription"
+          }
+        }
+      ]
+    },
+    {
+      "endpoint": "/sequential",
+      "method": "GET",
+      "extra_config": {
+        "github.com/devopsfaith/krakend/proxy": {
+          "sequential": true
+        }
+      },
+      "concurrent_calls": 1,
+      "backend": [
+        {
+          "url_pattern": "/hotels/1.json",
+          "host": [
+            "http://localhost:8000"
+          ],
+          "whitelist": [
+            "destination_id"
+        ]
+        },
+        {
+          "url_pattern": "/destinations/{resp0_destination_id}.json",
+          "host": [
+            "http://localhost:8000"
+          ],
+          "disable_host_sanitize": false
+        }
+      ]
+    },
+    {
+      "endpoint": "/notify",
+      "method": "POST",
+      "backend": [
+        {
+          "url_pattern": "/",
+          "method": "POST",
+          "disable_host_sanitize": true,
+          "extra_config": {
+            "github.com/devopsfaith/krakend-amqp/produce": {
+              "exchange": "notify-exchange",
+              "durable": true,
+              "delete": false,
+              "exclusive": false,
+              "no_wait": true,
+              "mandatory": true,
+              "immediate": false,
+              "name": "notifications"
+            }
+          },
+          "host": [
+            "amqp://guest:guest@localhost:5672"
+          ]
+        }
+      ]
+    }
+  ]
+}

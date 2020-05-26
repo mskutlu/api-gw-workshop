@@ -96,6 +96,27 @@
           }
       },
       {
+        "endpoint": "/foo",
+        "backend": [
+            {
+                "url_pattern": "/monolith/foo.json"
+            }
+        ],
+        "extra_config": {
+          "extra_config": {
+              "github.com/devopsfaith/krakend-jose/validator": {
+                  "alg": "RS256",
+                  "audience": [
+                      "https://ahankendi.auth0.com/api/v2/"
+                  ],
+                  "roles_key": "https://ahankendi.auth0.com/api/v2/roles",
+                  "roles": [],
+                  "jwk-url": "https://ahankendi.auth0.com/.well-known/jwks.json"
+              }
+          }
+        }
+    },
+      {
           "endpoint": "/sequential",
           "backend": [
               {
@@ -158,8 +179,6 @@
                       "name": "FullName"
                   },
                   "group": "github",
-                  "extra_config": {},
-                  "encoding": "json",
                   "method": "GET"
               },
               {
@@ -189,20 +208,15 @@
                       ]
                     }
                   },
-                  "encoding": "json",
                   "method": "GET"
               }
-          ],
-          "extra_config": {},
-          "concurrent_calls": 1
+          ]
       },
       {
           "endpoint": "/private/auth0",
           "backend": [
               {
-                  "url_pattern": "/user/1.json",
-                  "extra_config": {},
-                  "encoding": "json"
+                  "url_pattern": "/user/1.json"
               }
           ],
           "extra_config": {
@@ -215,8 +229,7 @@
                   "roles": [],
                   "jwk-url": "https://ahankendi.auth0.com/.well-known/jwks.json"
               }
-          },
-          "concurrent_calls": 1
+          }
       },
       {
           "endpoint": "/private/custom",
@@ -246,9 +259,7 @@
           "endpoint": "/token",
           "backend": [
               {
-                  "url_pattern": "/token.json",
-                  "extra_config": {},
-                  "encoding": "json"
+                  "url_pattern": "/token.json"
               }
           ],
           "extra_config": {
@@ -262,15 +273,11 @@
                   "jwk-url": "http://fake_api:8080/jwk/symmetric.json",
                   "disable_jwk_security": true
               }
-          },
-          "concurrent_calls": 1
+          }
       },
       {
         "endpoint": "/notify",
         "method": "POST",
-        "extra_config": {},
-        "output_encoding": "json",
-        "concurrent_calls": 1,
         "backend": [
           {
             "host": [
@@ -307,8 +314,6 @@
                 "jwk-url": "https://ahankendi.auth0.com/.well-known/jwks.json"
             }
         },
-        "output_encoding": "json",
-        "concurrent_calls": 1,
         "headers_to_pass": [
             "TrackId"
           ],
@@ -338,8 +343,6 @@
         "endpoint": "/processResult",
         "method": "GET",
         "extra_config": {},
-        "output_encoding": "json",
-        "concurrent_calls": 1,
         "backend": [
           {
             "host": [
@@ -362,6 +365,5 @@
           }
         ]
       }
-  ],
-  "output_encoding": "json"
+  ]
 }

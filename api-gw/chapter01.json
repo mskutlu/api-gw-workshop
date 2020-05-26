@@ -1,0 +1,76 @@
+{
+  "port": 8080,
+  "version": 2,
+  "timeout": "3000ms",
+  "cache_ttl": "30s",
+  "host": [
+      "http://localhost:8000"
+  ],
+  "endpoints": [
+      {
+          "endpoint": "/public",
+          "backend": [
+              {
+                  "host": [
+                      "https://api.github.com"
+                  ],
+                  "url_pattern": "/users/alperhankendi",
+                  "whitelist": [
+                      "avatar_url",
+                      "name",
+                      "company",
+                      "blog",
+                      "location",
+                      "mail",
+                      "hireable",
+                      "followers",
+                      "public_repos",
+                      "public_gists"
+                  ],
+                  "mapping": {
+                      "name": "FullName"
+                  },
+                  "group": "github",
+                  "method": "GET"
+              },
+              {
+                  "host": [
+                      "https://api.github.com"
+                  ],
+                  "url_pattern": "/repos/alperhankendi/address-service",
+                  "whitelist": [],
+                  "mapping": {},
+                  "group": "repo",
+                  "extra_config": {
+                    "github.com/devopsfaith/krakend/proxy": {
+                      "flatmap_filter": [
+                        {
+                          "type": "del",
+                          "args": [
+                            "owner.avatar_url"
+                          ]
+                        },
+                        {
+                          "type": "move",
+                          "args": [
+                            "owner.subscriptions_url",
+                            "s_url"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "method": "GET"
+              }
+          ]
+      },
+      {
+          "endpoint": "/foo",
+          "backend": [
+              {
+                  "url_pattern": "/monolith/foo.json"
+              }
+          ]
+      }
+  ]
+}

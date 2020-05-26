@@ -64,6 +64,22 @@ Just:
 
     docker-compose up
 
+## Development stuff
+
+### krakend-config2dot
+Transalte your KrakenD config file into a dot graph
+```go get github.com/devopsfaith/krakend-config2dot/cmd/krakend-config2dot```
+
+```
+krakend-config2dot -c api-gw/krakend.json |dot -Tpng -o config.png
+```
+
+### krakend-postman
+```
+go get -u github.com/devopsfaith/krakend-postman
+```
+
+
 ## Play!
 Fire up your browser, curl, postman, httpie or anything else you like to interact with any of the published services.
 
