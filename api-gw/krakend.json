@@ -77,23 +77,9 @@
                   "url_pattern": "/shop/products.json",
                   "whitelist": [
                       "products"
-                  ],
-                  "extra_config": {  
-                    "github.com/devopsfaith/krakend-ratelimit/juju/proxy": {
-                        "maxRate": 15,
-                        "capacity": 5
-                      }                    
-                  }
+                  ]
               }
-          ],
-          "extra_config": {
-              "github.com/devopsfaith/krakend-ratelimit/juju/router": {
-                "maxRate": 100,
-                "clientMaxRate": 10,
-                "key": "",
-                "strategy": "ip"                  
-              }
-          }
+          ]
       },
       {
         "endpoint": "/foo",
