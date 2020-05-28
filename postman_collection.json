@@ -1,0 +1,946 @@
+{
+	"info": {
+		"_postman_id": "b32c9039-3345-4fbc-8ecc-0b41157c8017",
+		"name": "api-gw",
+		"description": "TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Chapter01",
+			"item": [
+				{
+					"name": "01-Get Public github data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e06742c-19a9-4d0d-8960-94e24d5d95bd",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "AnonId",
+								"value": "12312312"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/public",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"public"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "01-Get Foo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "46050d9a-84ea-4711-bc15-eaca210ba3cc",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "AnonId",
+								"value": "12312312"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/foo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"foo"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Chapter02",
+			"item": [
+				{
+					"name": "00-Get Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "01-Get Foo with jwt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c6691a66-00bd-4ad0-8fc9-0992b7a0b96e",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjc3J0NzU2eXVpb21uYnZjeDk4ZXJ0eXVpb3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwic3ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVpbyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/javascript",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/foo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"foo"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Chapter03",
+			"item": [
+				{
+					"name": "Produce_Consume",
+					"item": [
+						{
+							"name": "01-AMQP Process Command (Private)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "45417641-acd0-4923-9267-443c4d95b826",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "TrackId",
+										"value": "{{$guid}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjc3J0NzU2eXVpb21uYnZjeDk4ZXJ0eXVpb3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwic3ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVpbyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/javascript"
+									},
+									{
+										"key": "",
+										"type": "text",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/processCommand",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"processCommand"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "02-AMQP Get Process Result (Private)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "52fc2437-a289-4a7c-92df-c6ab701846db",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "TrackId",
+										"value": "{{$guid}}"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjc3J0NzU2eXVpb21uYnZjeDk4ZXJ0eXVpb3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwic3ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVpbyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/javascript"
+									},
+									{
+										"key": "",
+										"type": "text",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8080/processResult",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"processResult"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "01-Get Checkout with jwt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "42252a95-eb44-4675-8e7b-43dd4d39c992",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjc3J0NzU2eXVpb21uYnZjeDk4ZXJ0eXVpb3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwic3ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVpbyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/checkout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02-Get Splash",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "809aa620-910c-4722-b588-3bcdedd6a844",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"",
+									"});",
+									"pm.test(\"Krakend response fully complete\", function () {",
+									"   pm.response.to.have.header(\"X-Krakend-Completed\");",
+									"   pm.response.to.be.header(\"X-Krakend-Completed\", \"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/splash",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"splash"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03-Get Sequential",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3f5181c2-242c-4184-89e8-1b2b4b91272d",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"",
+									"});",
+									"pm.test(\"Krakend response fully complete\", function () {",
+									"   pm.response.to.have.header(\"X-Krakend-Completed\");",
+									"   pm.response.to.be.header(\"X-Krakend-Completed\", \"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/sequential",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sequential"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04-AMQP Post Notify (Public)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "53c68cf7-2361-4687-9f89-ec9cec4fe4c1",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"{{$randomWords}}\",\n  \"message\": \"{{$randomWords}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/notify",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notify"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "dockerized",
+			"item": [
+				{
+					"name": "01-Get Public",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35d2c62e-355a-4b65-8a3c-e752235678c8",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/public",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"public"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02-Get failed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a7b780e4-c412-4f7f-bab3-9f2440538f83",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/fail",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"fail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03-Get sequential",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c9618d3a-063b-4e89-a323-a4ef623cbd01",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/sequential",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"sequential"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04-Get splash",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7de716b7-7456-4397-9c2c-0a0f3427c5f4",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"",
+									"});",
+									"pm.test(\"Krakend response fully complete\", function () {",
+									"   pm.response.to.have.header(\"X-Krakend-Completed\");",
+									"   pm.response.to.be.header(\"X-Krakend-Completed\", \"true\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/splash",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"splash"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05-Get Private Auth0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "AnonId",
+								"value": "12312312"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/private/auth0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"private",
+								"auth0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06- Get Token from fake service",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07- Get Private Data With fake jwt",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjc3J0NzU2eXVpb21uYnZjeDk4ZXJ0eXVpb3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwic3ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVpbyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5001/private/custom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"private",
+								"custom"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "08-AMQP Post Notify (Public)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1829684f-89c9-4b20-aab9-e5d10c8c3d3a",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"{{$randomWords}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/notify",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"notify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "09-AMQP Process Command (Private)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "96fbe539-ae3e-492c-8aa0-50bc42c01326",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "TrackId",
+								"value": "{{$guid}}"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/processCommand",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"processCommand"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10-AMQP Get Process Result (Private)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "997e7fc5-8b9e-4ba2-89d6-3d150305d62f",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "AnonId",
+								"value": "12312312"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{JWT}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/javascript"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5001/processResult",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"processResult"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7592af25-a4fa-494b-8b06-bb023452c13e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "46c0113d-f2b6-40af-8ef2-df44a1c3c465",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a337fbe2-4fd0-4520-90bd-630bcfaad099",
+			"key": "JWT",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
