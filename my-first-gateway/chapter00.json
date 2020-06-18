@@ -1,0 +1,25 @@
+{
+  "port": 8080,
+  "version": 2,
+  "timeout": "3000ms",
+  "cache_ttl": "30s",
+  "endpoints": [
+      {
+          "endpoint": "/public",
+          "backend": [
+              {
+                  "host": [
+                      "https://api.github.com"
+                  ],
+                  "url_pattern": "/users/alperhankendi"
+              },
+              {
+                  "host": [
+                      "https://api.github.com"
+                  ],
+                  "url_pattern": "/repos/alperhankendi/address-service"
+              }
+          ]
+      }
+  ]
+}
