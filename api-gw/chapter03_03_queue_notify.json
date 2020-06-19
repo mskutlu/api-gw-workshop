@@ -8,64 +8,6 @@
   ],
   "endpoints": [
     {
-      "endpoint": "/public",
-      "backend": [
-        {
-          "host": [
-            "https://api.github.com"
-          ],
-          "url_pattern": "/users/alperhankendi",
-          "whitelist": [
-            "avatar_url",
-            "name",
-            "company",
-            "blog",
-            "location",
-            "mail",
-            "hireable",
-            "followers",
-            "public_repos",
-            "public_gists"
-          ],
-          "mapping": {
-            "name": "FullName"
-          },
-          "group": "github",
-          "method": "GET"
-        },
-        {
-          "host": [
-            "https://api.github.com"
-          ],
-          "url_pattern": "/repos/alperhankendi/address-service",
-          "whitelist": [],
-          "mapping": {},
-          "group": "repo",
-          "extra_config": {
-            "github.com/devopsfaith/krakend/proxy": {
-              "flatmap_filter": [
-                {
-                  "type": "del",
-                  "args": [
-                    "owner.avatar_url"
-                  ]
-                },
-                {
-                  "type": "move",
-                  "args": [
-                    "owner.subscriptions_url",
-                    "s_url"
-                  ]
-                }
-              ]
-            }
-          },
-          "method": "GET"
-        }
-      ],
-      "extra_config": {}
-    },
-    {
       "endpoint": "/foo",
       "backend": [
         {
