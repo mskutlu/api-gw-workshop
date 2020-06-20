@@ -42,7 +42,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:8080/public",
@@ -91,7 +94,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:8080/foo",
@@ -167,7 +173,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:8080/foo",
@@ -232,7 +241,10 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}"
+									"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}",
+									"options": {
+										"raw": {}
+									}
 								},
 								"url": {
 									"raw": "http://localhost:8080/processCommand",
@@ -264,8 +276,11 @@
 									}
 								}
 							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [
 									{
 										"key": "TrackId",
@@ -288,7 +303,10 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}"
+									"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}",
+									"options": {
+										"raw": {}
+									}
 								},
 								"url": {
 									"raw": "http://localhost:8080/processResult",
@@ -343,7 +361,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:8080/checkout",
@@ -477,7 +498,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer\": \"{{$randomWords}}\",\n  \"message\": \"{{$randomWords}}\"\n}"
+							"raw": "{\n  \"customer\": \"{{$randomWords}}\",\n  \"message\": \"{{$randomWords}}\"\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:8080/notify",
@@ -657,46 +681,6 @@
 					"response": []
 				},
 				{
-					"name": "05-Get Private Auth0",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "AnonId",
-								"value": "12312312"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{JWT}}"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/javascript"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
-						},
-						"url": {
-							"raw": "http://localhost:5001/private/auth0",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5001",
-							"path": [
-								"private",
-								"auth0"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "06- Get Token from fake service",
 					"request": {
 						"method": "GET",
@@ -777,13 +761,22 @@
 						"method": "POST",
 						"header": [
 							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjc3J0NzU2eXVpb21uYnZjeDk4ZXJ0eXVpb3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwic3ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVpbyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk",
+								"type": "text"
+							},
+							{
 								"key": "Content-Type",
-								"value": "application/javascript"
+								"value": "application/javascript",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"{{$randomWords}}\"\n}"
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"{{$randomWords}}\"\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:5001/notify",
@@ -820,26 +813,26 @@
 						"header": [
 							{
 								"key": "TrackId",
-								"value": "{{$guid}}"
+								"value": "{{$guid}}",
+								"type": "text"
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{JWT}}"
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjc3J0NzU2eXVpb21uYnZjeDk4ZXJ0eXVpb3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwic3ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVpbyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/javascript"
-							},
-							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"value": "application/javascript",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}"
+							"raw": "{\n  \"CompanyName\": \"{{$randomCompanyName}}\",\n  \"City\": \"{{$randomCity}}\",\n  \"CompanyId\" : \"{{$guid}}\"\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:5001/processCommand",
@@ -879,20 +872,26 @@
 						"header": [
 							{
 								"key": "AnonId",
-								"value": "12312312"
+								"value": "12312312",
+								"type": "text"
 							},
 							{
 								"key": "Authorization",
-								"value": "Bearer {{JWT}}"
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6InNpbTIifQ.eyJhdWQiOiJodHRwOi8vYXBpLmV4YW1wbGUuY29tIiwiZXhwIjoxNzM1Njg5NjAwLCJpc3MiOiJodHRwczovL2tyYWtlbmQuaW8iLCJqdGkiOiJtbmIyM3Zjc3J0NzU2eXVpb21uYnZjeDk4ZXJ0eXVpb3AiLCJyb2xlcyI6WyJyb2xlX2EiLCJyb2xlX2IiXSwic3ViIjoiMTIzNDU2Nzg5MHF3ZXJ0eXVpbyJ9.htgbhantGcv6zrN1i43Rl58q1sokh3lzuFgzfenI0Rk",
+								"type": "text"
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/javascript"
+								"value": "application/javascript",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}"
+							"raw": "{\n  \"customer\": \"Alper Hankendi\",\n  \"message\": \"Hello Worlds\",\n  \"count\": {{loopCount}}\n}",
+							"options": {
+								"raw": {}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:5001/processResult",
@@ -936,7 +935,7 @@
 	],
 	"variable": [
 		{
-			"id": "a337fbe2-4fd0-4520-90bd-630bcfaad099",
+			"id": "989950bf-6816-4201-af22-a76032003796",
 			"key": "JWT",
 			"value": "",
 			"type": "string"
