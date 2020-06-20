@@ -198,26 +198,7 @@
               }
           ]
       },
-      {
-          "endpoint": "/private/auth0",
-          "backend": [
-              {
-                  "url_pattern": "/user/1.json"
-              }
-          ],
-          "extra_config": {
-              "github.com/devopsfaith/krakend-jose/validator": {
-                  "alg": "RS256",
-                  "audience": [
-                      "https://ahankendi.auth0.com/api/v2/"
-                  ],
-                  "roles_key": "https://ahankendi.auth0.com/api/v2/roles",
-                  "roles": [],
-                  "jwk-url": "https://ahankendi.auth0.com/.well-known/jwks.json"
-              }
-          }
-      },
-      {
+       {
           "endpoint": "/private/custom",
           "backend": [
               {
@@ -266,23 +247,24 @@
         "method": "POST",
         "backend": [
           {
-            "host": [
-                "amqp://guest:guest@rabbitmq:5672"
-            ],
-            "disable_host_sanitize": true,            
+            "url_pattern": "/",
             "method": "POST",
+            "disable_host_sanitize": true,
             "extra_config": {
               "github.com/devopsfaith/krakend-amqp/produce": {
-                "name": "notifications",
                 "exchange": "notify-exchange",
                 "durable": true,
                 "delete": false,
                 "exclusive": false,
                 "no_wait": true,
                 "mandatory": true,
-                "immediate": false
+                "immediate": false,
+                "name": "notifications"
               }
-            }
+            },
+            "host": [
+              "amqp://guest:guest@rabbitmq:5672"
+            ]
           }
         ]
       },
@@ -291,13 +273,18 @@
         "method": "POST",
         "extra_config": {
             "github.com/devopsfaith/krakend-jose/validator": {
-                "alg": "RS256",
+                "alg": "HS256",
                 "audience": [
-                    "https://ahankendi.auth0.com/api/v2/"
+                  "http://api.example.com"
                 ],
-                "roles_key": "https://ahankendi.auth0.com/api/v2/roles",
-                "roles": [],
-                "jwk-url": "https://ahankendi.auth0.com/.well-known/jwks.json"
+                "roles_key": "roles",
+                "issuer": "https://krakend.io",
+                "roles": [
+                  "role_a",
+                  "role_c"
+                ],
+                "jwk-url": "http://fake_api:8080/jwk/symmetric.json",
+                "disable_jwk_security": true
             }
         },
         "headers_to_pass": [
@@ -328,7 +315,22 @@
       {
         "endpoint": "/processResult",
         "method": "GET",
-        "extra_config": {},
+        "extra_config": {
+            "github.com/devopsfaith/krakend-jose/validator": {
+                "alg": "HS256",
+                "audience": [
+                  "http://api.example.com"
+                ],
+                "roles_key": "roles",
+                "issuer": "https://krakend.io",
+                "roles": [
+                  "role_a",
+                  "role_c"
+                ],
+                "jwk-url": "http://fake_api:8080/jwk/symmetric.json",
+                "disable_jwk_security": true
+            }
+        },        
         "backend": [
           {
             "host": [
